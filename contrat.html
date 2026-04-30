@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Contrat d'Exclusivité — Maison Yahya</title>
+  <meta name="description" content="Contrat d'exclusivité officiel — Maison Yahya. Signature requise." />
+  <!-- SVG favicon: gold ✦ on #0a0a0a -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23d4af37'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="contract-page-body">
+  <header class="maison-header">
+    <p>✦ MAISON YAHYA ✦</p>
+  </header>
+
+  <main class="contract-main">
+    <div class="contract-scroll" id="contract-scroll">
+      <!-- Wax seal (hidden until signed) -->
+      <div class="wax-seal" id="wax-seal" aria-hidden="true">
+        <div class="wax-seal-symbol">✦ VALIDÉ ❤️ ✦</div>
+        <div class="wax-seal-text">Maison Yahya 2026</div>
+      </div>
+
+      <header class="contract-header">
+        <h1>CONTRAT D'EXCLUSIVITÉ<br>MAISON YAHYA</h1>
+        <p class="contract-sub">Article L.2026 — Édition unique</p>
+      </header>
+
+      <div class="contract-divider" aria-hidden="true"></div>
+
+      <section class="contract-parties" aria-label="Parties contractantes">
+        <p>Entre les soussignés :</p>
+        <p><strong>Le contractant</strong> : M. Yahya, fondateur de la Maison Yahya</p>
+        <p><strong>La signataire</strong> : Mlle Manal Abbou</p>
+        <p>Il est convenu ce qui suit :</p>
+      </section>
+
+      <ol class="contract-articles" aria-label="Articles du contrat">
+        <li><strong>Article 1.</strong> La signataire accepte les ronflements occasionnels du contractant comme une douce mélodie nocturne.</li>
+        <li><strong>Article 2.</strong> Tout sushi commandé est partagé équitablement, à l'exception du saumon, qui revient de droit à la signataire.</li>
+        <li><strong>Article 3.</strong> Le mot « OMG » peut être prononcé jusqu'à 100 fois par jour sans pénalité aucune.</li>
+        <li><strong>Article 4.</strong> Toute vitrine de bijouterie aperçue engendre une obligation de pause contemplation d'au moins 30 secondes.</li>
+        <li><strong>Article 5.</strong> Le présent contrat est renouvelé automatiquement chaque matin par un sourire mutuel.</li>
+        <li><strong>Article 6.</strong> Validité : indéterminée. Résiliation soumise à signature commune devant un témoin certifié.</li>
+      </ol>
+
+      <div class="contract-divider" aria-hidden="true"></div>
+
+      <div class="signature-area" aria-label="Zone de signature">
+        <div class="signature-box">
+          <canvas id="sig-yahya" width="280" height="100" aria-label="Signature de Yahya (pré-remplie)"></canvas>
+          <span class="sig-label">Yahya</span>
+        </div>
+        <div class="signature-box">
+          <canvas id="sig-manal" width="280" height="100" aria-label="Zone de signature pour Manal"></canvas>
+          <span class="sig-label">Manal</span>
+        </div>
+      </div>
+
+      <div class="contract-buttons">
+        <button id="btn-refuser" class="btn-ghost" aria-label="Refuser le contrat">REFUSER</button>
+        <button id="btn-signer" class="btn-gold" disabled aria-label="Signer et valider le contrat">SIGNER ET VALIDER</button>
+      </div>
+
+      <p id="refuse-message" class="refuse-message" aria-live="polite" role="status"></p>
+    </div>
+
+    <p id="contract-confirmation" class="contract-confirmation" aria-live="polite" role="status">
+      <em>Ce contrat est juridiquement contraignant pour les 80 prochaines années. Bienvenue, Mlle Abbou.</em>
+    </p>
+
+    <a class="back-link" href="index.html" aria-label="Retour à la collection">← Retour à la collection</a>
+  </main>
+
+  <footer class="site-footer">Conçu avec ❤️ par Yahya — Pour Manal uniquement.</footer>
+
+  <script src="app.js"></script>
+  <script>
+    // ── Yahya pre-drawn signature ─────────────────────────────
+    (function drawYahyaSignature() {
+      const canvas = document.getElementById('sig-yahya');
+      const ctx = canvas.getContext('2d');
+      // Scale for device pixel ratio
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = 280 * dpr;
+      canvas.height = 100 * dpr;
+      canvas.style.width = '280px';
+      canvas.style.height = '100px';
+      ctx.scale(dpr, dpr);
+
+      ctx.strokeStyle = '#a8892a';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // Cursive Y-shaped signature path animated segment by segment
+      const segments = [
+        // Y left stroke
+        [[30, 20], [55, 50]],
+        // Y right stroke
+        [[80, 20], [55, 50]],
+        // Y vertical stem
+        [[55, 50], [55, 80]],
+        // a curve
+        [[75, 40], [90, 35], [105, 40], [100, 55], [85, 60], [80, 50], [95, 45]],
+        // h stroke
+        [[115, 20], [115, 70], [115, 50], [130, 42], [135, 55], [133, 68]],
+        // y / a
+        [[150, 42], [165, 42], [168, 55], [155, 65], [148, 60], [150, 72], [160, 80]],
+        // a flourish
+        [[178, 35], [220, 30], [240, 50], [225, 75], [195, 78], [185, 60], [200, 55], [220, 60]]
+      ];
+
+      let segIdx = 0;
+      let pointIdx = 1;
+
+      function drawNext() {
+        if (segIdx >= segments.length) return;
+        const seg = segments[segIdx];
+        if (pointIdx === 1) {
+          ctx.beginPath();
+          ctx.moveTo(seg[0][0], seg[0][1]);
+        }
+        const pt = seg[pointIdx];
+        ctx.lineTo(pt[0], pt[1]);
+        ctx.stroke();
+
+        pointIdx++;
+        if (pointIdx >= seg.length) {
+          segIdx++;
+          pointIdx = 1;
+        }
+        setTimeout(drawNext, 25);
+      }
+      setTimeout(drawNext, 200);
+    })();
+
+    // ── Manal's signature canvas ──────────────────────────────
+    (function setupManalCanvas() {
+      const canvas = document.getElementById('sig-manal');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = 280 * dpr;
+      canvas.height = 100 * dpr;
+      canvas.style.width = '280px';
+      canvas.style.height = '100px';
+      ctx.scale(dpr, dpr);
+
+      ctx.strokeStyle = '#2a1f0e';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      let drawing = false;
+      let strokeCount = 0;
+      let lastX = 0, lastY = 0;
+      const btnSigner = document.getElementById('btn-signer');
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = 280 / rect.width;
+        const scaleY = 100 / rect.height;
+        if (e.touches) {
+          return {
+            x: (e.touches[0].clientX - rect.left) * scaleX,
+            y: (e.touches[0].clientY - rect.top) * scaleY
+          };
+        }
+        return {
+          x: (e.clientX - rect.left) * scaleX,
+          y: (e.clientY - rect.top) * scaleY
+        };
+      }
+
+      function startDraw(e) {
+        e.preventDefault();
+        drawing = true;
+        strokeCount++;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        if (strokeCount >= 3) {
+          btnSigner.disabled = false;
+        }
+      }
+
+      function draw(e) {
+        e.preventDefault();
+        if (!drawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function stopDraw(e) {
+        if (e) e.preventDefault();
+        drawing = false;
+      }
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDraw);
+      canvas.addEventListener('mouseleave', stopDraw);
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDraw, { passive: false });
+    })();
+
+    // ── Refuse button — runs away from cursor ─────────────────
+    (function setupRefuseButton() {
+      const btnRefuser = document.getElementById('btn-refuser');
+      const refuseMsg = document.getElementById('refuse-message');
+      let attemptCount = 0;
+
+      btnRefuser.addEventListener('mouseenter', function () {
+        attemptCount++;
+        if (attemptCount > 5) {
+          refuseMsg.textContent = 'Tu peux essayer, mais c\'est inutile 😉';
+          return;
+        }
+        // Move to a random position within viewport, fixed positioning
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const margin = 60;
+        const newX = Math.random() * (vw - 2 * margin) + margin;
+        const newY = Math.random() * (vh - 2 * margin) + margin;
+        btnRefuser.style.position = 'fixed';
+        btnRefuser.style.left = newX + 'px';
+        btnRefuser.style.top = newY + 'px';
+        btnRefuser.style.zIndex = '1000';
+      });
+    })();
+
+    // ── Sign button ───────────────────────────────────────────
+    (function setupSignButton() {
+      const btnSigner = document.getElementById('btn-signer');
+      const waxSeal = document.getElementById('wax-seal');
+      const confirmation = document.getElementById('contract-confirmation');
+
+      btnSigner.addEventListener('click', function () {
+        // Show wax seal with stamp animation
+        waxSeal.style.display = 'flex';
+        waxSeal.removeAttribute('aria-hidden');
+        // Force reflow before adding class
+        void waxSeal.offsetWidth;
+        waxSeal.classList.add('stamped');
+
+        // After 700ms show confirmation + confetti
+        setTimeout(function () {
+          confirmation.style.display = 'block';
+          launchConfetti(2000);
+        }, 700);
+
+        btnSigner.disabled = true;
+      });
+    })();
+  </script>
+</body>
+</html>
