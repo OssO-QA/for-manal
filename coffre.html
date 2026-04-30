@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Coffre aux Trésors — Maison Yahya</title>
+  <meta name="description" content="Chaque ouverture révèle une promesse — Le Coffre aux Trésors de Maison Yahya." />
+  <!-- SVG favicon: gold ✦ on #0a0a0a -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23d4af37'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="maison-header">
+    <p>✦ MAISON YAHYA ✦</p>
+  </header>
+
+  <main class="coffre-main">
+    <h1>LE COFFRE AUX TRÉSORS</h1>
+    <p class="coffre-sub"><em>Chaque ouverture révèle une promesse.</em></p>
+
+    <div class="rewards-counter" role="status" aria-label="Compteur de récompenses">
+      Récompenses dues par Yahya :
+      <span id="count-display" aria-live="polite">0</span>
+    </div>
+
+    <div class="vault-display" aria-label="Affichage du coffre" aria-live="polite">
+      <div class="slot" id="slot-0" aria-hidden="true"><div class="slot-inner" id="slot-inner-0">✦</div></div>
+      <div class="slot" id="slot-1" aria-hidden="true"><div class="slot-inner" id="slot-inner-1">✦</div></div>
+      <div class="slot" id="slot-2" aria-hidden="true"><div class="slot-inner" id="slot-inner-2">✦</div></div>
+    </div>
+
+    <button id="btn-ouvrir" class="btn-gold" aria-label="Ouvrir le coffre">OUVRIR LE COFFRE</button>
+
+    <div id="result-message" class="result-message" aria-live="assertive" role="status"></div>
+
+    <p class="coffre-fine-print">Toutes les récompenses sont contractuellement garanties par la Maison Yahya.</p>
+
+    <a class="back-link" href="index.html" aria-label="Retour à la collection">← Retour</a>
+  </main>
+
+  <footer class="site-footer">Conçu avec ❤️ par Yahya — Pour Manal uniquement.</footer>
+
+  <script src="app.js"></script>
+  <script>
+    const countEl = document.getElementById('count-display');
+    const btnOuvrir = document.getElementById('btn-ouvrir');
+    const resultMsg = document.getElementById('result-message');
+    const rewardsCounter = document.querySelector('.rewards-counter');
+    const slotInners = [
+      document.getElementById('slot-inner-0'),
+      document.getElementById('slot-inner-1'),
+      document.getElementById('slot-inner-2')
+    ];
+    const slots = [
+      document.getElementById('slot-0'),
+      document.getElementById('slot-1'),
+      document.getElementById('slot-2')
+    ];
+    const ALL_SYMBOLS = ['💎', '🍣', '❤️', '🌹', '👑', '✨'];
+
+    // Init counter from localStorage
+    countEl.textContent = getRewardsCount();
+
+    // Animate a single slot: cycles through symbols every 80ms, stops after stopAfterMs
+    function animateSlot(slotInnerEl, slotEl, stopAfterMs, finalSymbol) {
+      slotEl.classList.add('spinning');
+      let i = 0;
+      const interval = setInterval(function () {
+        slotInnerEl.textContent = ALL_SYMBOLS[i % ALL_SYMBOLS.length];
+        i++;
+      }, 80);
+      setTimeout(function () {
+        clearInterval(interval);
+        slotInnerEl.textContent = finalSymbol;
+        slotEl.classList.remove('spinning');
+      }, stopAfterMs);
+    }
+
+    btnOuvrir.addEventListener('click', function () {
+      // Disable button during spin
+      btnOuvrir.disabled = true;
+      resultMsg.textContent = '';
+
+      const result = spinVault();
+
+      // Animate each slot with staggered stop times
+      animateSlot(slotInners[0], slots[0], 1000, result.symbols[0]);
+      animateSlot(slotInners[1], slots[1], 1300, result.symbols[1]);
+      animateSlot(slotInners[2], slots[2], 1600, result.symbols[2]);
+
+      // Show result after last slot stops
+      setTimeout(function () {
+        resultMsg.textContent = result.message;
+
+        if (result.isWin) {
+          const newCount = incrementRewards();
+          countEl.textContent = newCount;
+          // Flash counter
+          rewardsCounter.classList.remove('flash');
+          void rewardsCounter.offsetWidth; // force reflow
+          rewardsCounter.classList.add('flash');
+          setTimeout(function () { rewardsCounter.classList.remove('flash'); }, 600);
+        }
+
+        if (result.isJackpot) {
+          launchConfetti(3000);
+          // Vault glow effect
+          slots.forEach(function (s) { s.style.boxShadow = '0 0 30px rgba(212,175,55,0.8)'; });
+          setTimeout(function () {
+            slots.forEach(function (s) { s.style.boxShadow = ''; });
+          }, 3200);
+        }
+
+        // Re-enable button
+        btnOuvrir.disabled = false;
+      }, 1800);
+    });
+  </script>
+</body>
+</html>

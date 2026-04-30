@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Diagnostic — Clinique Yahya</title>
+  <meta name="description" content="Rapport d'analyse confidentiel — Clinique Yahya." />
+  <!-- SVG favicon: gold ✦ on #0a0a0a -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23d4af37'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="maison-header">
+    <p>✦ MAISON YAHYA ✦</p>
+  </header>
+
+  <main class="diagnostic-main">
+    <div class="clinic-header">
+      <h1>CLINIQUE YAHYA</h1>
+      <div class="clinic-underline" aria-hidden="true"></div>
+      <p class="clinic-subheader">Rapport d'analyse confidentiel — N° de dossier : #001-OMG</p>
+    </div>
+
+    <div class="patient-card" role="region" aria-label="Informations patient">
+      <table>
+        <tbody>
+          <tr>
+            <td>Patiente</td>
+            <td>Mlle Manal Abbou</td>
+          </tr>
+          <tr>
+            <td>Date d'examen</td>
+            <td>30 avril 2026</td>
+          </tr>
+          <tr>
+            <td>Praticien</td>
+            <td>Dr. Yahya</td>
+          </tr>
+          <tr>
+            <td>Statut</td>
+            <td>Confidentiel — Usage interne uniquement</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button id="btn-analyse" class="btn-gold" aria-label="Lancer l'analyse">Lancer l'analyse</button>
+
+    <div id="analysis-container" aria-live="polite">
+      <div id="spinner" class="diamond-spinner" aria-label="Analyse en cours…">✦</div>
+
+      <ol class="check-list" id="check-list" aria-label="Résultats d'analyse">
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>Analyse du taux de « OMG » quotidien… 47/jour — au-dessus de la moyenne nationale</span>
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>Évaluation de l'affinité aux sushis… 99,8 % — saumon prédominant</span>
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>Test de sensibilité aux diamants… niveau critique 💎</span>
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>Mesure de la tolérance aux ronflements… à surveiller 😴</span>
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>Calcul de l'indice de beauté… hors barème</span>
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          <span>Détection de symptômes amoureux… positif</span>
+        </li>
+      </ol>
+
+      <article id="diagnostic-final" class="diagnostic-final" aria-label="Diagnostic final">
+        <h2>Diagnostic Final</h2>
+        <p>Patiente atteinte d'un syndrome rare et incurable :<br><em>être la copine parfaite de Yahya.</em></p>
+        <p><strong>Pronostic</strong> : excellent.<br>
+        <strong>Traitement recommandé</strong> : sushis en illimité, diamants à exposer régulièrement, ronflements à tolérer avec tendresse.</p>
+        <p class="signature">Signé, Dr. Yahya — Maison Yahya</p>
+      </article>
+    </div>
+
+    <a class="back-link" href="index.html" aria-label="Retour à la collection">← Retour à la collection</a>
+  </main>
+
+  <footer class="site-footer">Conçu avec ❤️ par Yahya — Pour Manal uniquement.</footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Hide analysis container and check items on load
+    const container = document.getElementById('analysis-container');
+    const spinner = document.getElementById('spinner');
+    const checkItems = document.querySelectorAll('.check-item');
+    const diagnosticFinal = document.getElementById('diagnostic-final');
+    const btnAnalyse = document.getElementById('btn-analyse');
+
+    container.style.display = 'none';
+    checkItems.forEach(item => { item.style.animationName = 'none'; item.style.opacity = '0'; });
+    diagnosticFinal.style.animationName = 'none';
+    diagnosticFinal.style.opacity = '0';
+
+    btnAnalyse.addEventListener('click', function () {
+      // Hide button
+      btnAnalyse.style.display = 'none';
+
+      // Show container with spinner
+      container.style.display = 'block';
+      spinner.style.display = 'inline-block';
+
+      // After 1.5s, hide spinner and reveal check items one by one
+      setTimeout(function () {
+        spinner.style.display = 'none';
+
+        checkItems.forEach(function (item, index) {
+          setTimeout(function () {
+            item.style.animationName = 'check-appear';
+            item.style.opacity = '1';
+            // Show final diagnostic after all checks
+            if (index === checkItems.length - 1) {
+              setTimeout(function () {
+                diagnosticFinal.style.animationName = 'slide-up';
+                diagnosticFinal.style.opacity = '1';
+              }, 800);
+            }
+          }, index * 1200);
+        });
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
